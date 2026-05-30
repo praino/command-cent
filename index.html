@@ -1,630 +1,314 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Command Center</title>
-  <style>
-    :root {
-      --bg: #f7f7f5;
-      --card: #ffffff;
-      --text: #1f2933;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --accent: #111827;
-      --soft: #f1f5f9;
-      --danger: #b91c1c;
-      --radius: 18px;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      padding-bottom: 90px;
-    }
-
-    header {
-      padding: 22px 18px 10px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 28px;
-      letter-spacing: -0.04em;
-    }
-
-    .subtitle {
-      color: var(--muted);
-      margin-top: 4px;
-      font-size: 14px;
-    }
-
-    main {
-      padding: 10px 14px;
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-    }
-
-    h2 {
-      font-size: 20px;
-      margin: 0 0 12px;
-      letter-spacing: -0.03em;
-    }
-
-    h3 {
-      font-size: 15px;
-      margin: 18px 0 8px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    textarea, input, select {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 13px;
-      font-size: 16px;
-      background: #fff;
-      color: var(--text);
-      margin-bottom: 10px;
-    }
-
-    textarea {
-      min-height: 130px;
-      resize: vertical;
-    }
-
-    button {
-      border: 0;
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-size: 15px;
-      font-weight: 650;
-      background: var(--accent);
-      color: white;
-      cursor: pointer;
-      width: 100%;
-      margin: 4px 0;
-    }
-
-    button.secondary {
-      background: var(--soft);
-      color: var(--text);
-    }
-
-    button.danger {
-      background: #fee2e2;
-      color: var(--danger);
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-
-    .item {
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 12px;
-      margin-bottom: 9px;
-      background: #fff;
-    }
-
-    .item-title {
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .meta {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .pill {
-      display: inline-block;
-      padding: 4px 8px;
-      background: var(--soft);
-      border-radius: 999px;
-      font-size: 12px;
-      margin: 4px 4px 0 0;
-      color: var(--muted);
-    }
-
-    nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: white;
-      border-top: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      padding: 8px 6px 18px;
-      z-index: 10;
-    }
-
-    nav button {
-      background: transparent;
-      color: var(--muted);
-      font-size: 12px;
-      padding: 8px 2px;
-      margin: 0;
-      border-radius: 12px;
-    }
-
-    nav button.active {
-      background: var(--accent);
-      color: white;
-    }
-
-    .hidden { display: none; }
-
-    .empty {
-      color: var(--muted);
-      font-size: 14px;
-      padding: 8px 0;
-    }
-
-    pre {
-      white-space: pre-wrap;
-      background: #111827;
-      color: white;
-      padding: 14px;
-      border-radius: 14px;
-      font-size: 13px;
-      overflow: auto;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Life Scorecard</title>
+<style>
+:root{--bg:#f6f5f1;--card:#fff;--text:#18212f;--muted:#6b7280;--border:#e5e7eb;--dark:#111827;--soft:#eef2f7;--good:#16a34a;--warn:#ca8a04;--bad:#dc2626}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);padding-bottom:88px}
+header{padding:22px 18px 8px;max-width:800px;margin:auto}
+h1{margin:0;font-size:30px;letter-spacing:-.05em}
+.sub{color:var(--muted);font-size:14px;margin-top:4px}
+main{max-width:800px;margin:auto;padding:10px 14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:16px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.03)}
+h2{font-size:20px;margin:0 0 12px;letter-spacing:-.03em}
+h3{font-size:13px;margin:16px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+input,textarea,select{width:100%;border:1px solid var(--border);border-radius:14px;padding:13px;font-size:16px;margin-bottom:10px;background:white}
+textarea{min-height:110px}
+button{width:100%;border:0;border-radius:14px;padding:12px 14px;font-size:15px;font-weight:700;background:var(--dark);color:white;margin:4px 0}
+button.secondary{background:var(--soft);color:var(--text)}
+button.danger{background:#fee2e2;color:var(--bad)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.score{font-size:46px;font-weight:800;letter-spacing:-.06em}
+.bar{height:12px;background:var(--soft);border-radius:999px;overflow:hidden;margin:8px 0 12px}
+.fill{height:100%;background:var(--dark);border-radius:999px}
+.metric{display:flex;justify-content:space-between;align-items:center;margin:10px 0}
+.item{border:1px solid var(--border);border-radius:16px;padding:12px;margin-bottom:9px;background:white}
+.title{font-weight:750}
+.meta{font-size:13px;color:var(--muted);margin-top:3px}
+.dayrow{display:grid;grid-template-columns:56px 1fr;gap:10px;align-items:start;border-bottom:1px solid var(--border);padding:8px 0}
+.hour{font-size:13px;color:var(--muted)}
+nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(5,1fr);padding:8px 6px 18px}
+nav button{background:transparent;color:var(--muted);font-size:12px;padding:8px 2px;margin:0;border-radius:12px}
+nav button.active{background:var(--dark);color:white}
+.hidden{display:none}
+.empty{color:var(--muted);font-size:14px}
+.small{font-size:12px;color:var(--muted)}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Command Center</h1>
-    <div class="subtitle">Today. Family. Follow-ups. Goals.</div>
-  </header>
+<header>
+  <h1>Life Scorecard</h1>
+  <div class="sub">Focus. Progress. Energy. Wellbeing.</div>
+</header>
 
-  <main>
-    <section id="today" class="tab">
-      <div class="card">
-        <h2>Today’s Big Three</h2>
-        <div id="bigThree"></div>
-      </div>
+<main>
+<section id="dashboard" class="tab">
+  <div class="card">
+    <h2>This Week</h2>
+    <div class="score" id="weekScore">0%</div>
+    <div class="bar"><div class="fill" id="weekFill"></div></div>
+    <div id="areaScores"></div>
+  </div>
 
-      <div class="card">
-        <h2>Due Soon</h2>
-        <div id="dueSoon"></div>
-      </div>
+  <div class="card">
+    <h2>Today’s Focus</h2>
+    <div id="todayFocus"></div>
+  </div>
 
-      <div class="card">
-        <h2>Waiting On</h2>
-        <div id="todayWaiting"></div>
-      </div>
-    </section>
+  <div class="card">
+    <h2>Life Radar</h2>
+    <div id="radar"></div>
+  </div>
+</section>
 
-    <section id="capture" class="tab hidden">
-      <div class="card">
-        <h2>What’s on your mind?</h2>
-        <textarea id="noteInput" placeholder="Dump messy notes here..."></textarea>
-        <button onclick="saveNote()">Save Note</button>
-        <button class="secondary" onclick="makePrompt()">Create ChatGPT Prompt</button>
-      </div>
+<section id="week" class="tab hidden">
+  <div class="card">
+    <h2>Weekly Targets</h2>
+    <input id="targetTitle" placeholder="Target, e.g. Workout 4x" />
+    <select id="targetArea">
+      <option>Work</option><option>Family</option><option>Health</option><option>Wellbeing</option><option>Personal</option>
+    </select>
+    <button onclick="addTarget()">Add Target</button>
+  </div>
+  <div class="card">
+    <h2>Progress</h2>
+    <div id="targetsList"></div>
+  </div>
+</section>
 
-      <div class="card hidden" id="promptCard">
-        <h2>Copy This Into ChatGPT</h2>
-        <pre id="promptOutput"></pre>
-        <button onclick="copyText('promptOutput')">Copy Prompt</button>
-      </div>
+<section id="day" class="tab hidden">
+  <div class="card">
+    <h2>Day View</h2>
+    <input id="eventDate" type="date" />
+    <input id="eventTime" type="time" />
+    <input id="eventTitle" placeholder="Event or time block" />
+    <select id="eventArea">
+      <option>Work</option><option>Family</option><option>Health</option><option>Personal</option>
+    </select>
+    <button onclick="addEvent()">Add To Day</button>
+  </div>
+  <div class="card">
+    <h2>Hour by Hour</h2>
+    <div id="dayList"></div>
+  </div>
+</section>
 
-      <div class="card">
-        <h2>Paste ChatGPT Output</h2>
-        <textarea id="importInput" placeholder="Paste the JSON response from ChatGPT here..."></textarea>
-        <button onclick="importChatGPT()">Import Records</button>
-      </div>
+<section id="checkin" class="tab hidden">
+  <div class="card">
+    <h2>End of Day Check-In</h2>
+    <input id="checkDate" type="date" />
+    <label>Mood: <span id="moodVal">3</span></label>
+    <input id="mood" type="range" min="1" max="5" value="3" oninput="moodVal.textContent=this.value" />
+    <label>Energy: <span id="energyVal">3</span></label>
+    <input id="energy" type="range" min="1" max="5" value="3" oninput="energyVal.textContent=this.value" />
+    <label>Stress: <span id="stressVal">3</span></label>
+    <input id="stress" type="range" min="1" max="5" value="3" oninput="stressVal.textContent=this.value" />
+    <input id="sleep" type="number" step=".5" placeholder="Sleep hours" />
+    <select id="workedOut"><option>No workout</option><option>Workout completed</option></select>
+    <select id="familyTime"><option>Low family time</option><option>Good family time</option><option>Great family time</option></select>
+    <textarea id="win" placeholder="Biggest win today"></textarea>
+    <textarea id="frustration" placeholder="Biggest frustration"></textarea>
+    <button onclick="saveCheckin()">Save Check-In</button>
+  </div>
+  <div class="card">
+    <h2>Wellbeing Trend</h2>
+    <div id="checkinList"></div>
+  </div>
+</section>
 
-      <div class="card">
-        <h2>Recent Notes</h2>
-        <div id="notesList"></div>
-      </div>
-    </section>
+<section id="capture" class="tab hidden">
+  <div class="card">
+    <h2>Capture</h2>
+    <textarea id="note" placeholder="Brain dump anything here..."></textarea>
+    <button onclick="saveNote()">Save Note</button>
+  </div>
 
-    <section id="waiting" class="tab hidden">
-      <div class="card">
-        <h2>Add Waiting On</h2>
-        <input id="waitPerson" placeholder="Person or group" />
-        <input id="waitThing" placeholder="What are you waiting on?" />
-        <input id="waitDate" type="date" />
-        <button onclick="addWaiting()">Add</button>
-      </div>
-      <div class="card">
-        <h2>Open Follow-ups</h2>
-        <div id="waitingList"></div>
-      </div>
-    </section>
+  <div class="card">
+    <h2>Backup</h2>
+    <button onclick="exportData()">Export JSON</button>
+    <textarea id="backup" placeholder="Export/import data here"></textarea>
+    <button class="secondary" onclick="importData()">Import JSON</button>
+    <button class="danger" onclick="clearAll()">Clear All</button>
+  </div>
+</section>
+</main>
 
-    <section id="goals" class="tab hidden">
-      <div class="card">
-        <h2>Add Goal</h2>
-        <input id="goalTitle" placeholder="Goal" />
-        <select id="goalArea">
-          <option>Work</option>
-          <option>Family</option>
-          <option>Health</option>
-          <option>Personal</option>
-        </select>
-        <input id="goalProgress" placeholder="Progress, e.g. 2/4 workouts" />
-        <button onclick="addGoal()">Add Goal</button>
-      </div>
-      <div class="card">
-        <h2>Goals</h2>
-        <div id="goalsList"></div>
-      </div>
-    </section>
+<nav>
+  <button class="active" onclick="showTab('dashboard',this)">Home</button>
+  <button onclick="showTab('week',this)">Week</button>
+  <button onclick="showTab('day',this)">Day</button>
+  <button onclick="showTab('checkin',this)">EOD</button>
+  <button onclick="showTab('capture',this)">Capture</button>
+</nav>
 
-    <section id="review" class="tab hidden">
-      <div class="card">
-        <h2>Weekly Review</h2>
-        <button onclick="generateReview()">Generate Review</button>
-        <pre id="reviewOutput"></pre>
-        <button class="secondary" onclick="copyText('reviewOutput')">Copy Review</button>
-      </div>
+<script>
+const KEY="lifeScorecardV1";
+let data=JSON.parse(localStorage.getItem(KEY))||{
+  targets:[],events:[],checkins:[],notes:[]
+};
 
-      <div class="card">
-        <h2>Backup</h2>
-        <button onclick="exportData()">Export JSON</button>
-        <textarea id="backupBox" placeholder="Export appears here. You can also paste backup JSON here and import."></textarea>
-        <button class="secondary" onclick="importBackup()">Import Backup</button>
-        <button class="danger" onclick="clearAll()">Clear All Data</button>
-      </div>
-    </section>
-  </main>
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2)}
+function today(){return new Date().toISOString().slice(0,10)}
 
-  <nav>
-    <button class="active" onclick="showTab('today', this)">Today</button>
-    <button onclick="showTab('capture', this)">Capture</button>
-    <button onclick="showTab('waiting', this)">Waiting</button>
-    <button onclick="showTab('goals', this)">Goals</button>
-    <button onclick="showTab('review', this)">Review</button>
-  </nav>
+eventDate.value=today();
+checkDate.value=today();
 
-  <script>
-    const KEY = "commandCenterData";
-
-    let data = JSON.parse(localStorage.getItem(KEY)) || {
-      notes: [],
-      tasks: [],
-      waiting: [],
-      goals: []
-    };
-
-    function save() {
-      localStorage.setItem(KEY, JSON.stringify(data));
-      render();
-    }
-
-    function id() {
-      return Date.now().toString(36) + Math.random().toString(36).slice(2);
-    }
-
-    function todayISO() {
-      return new Date().toISOString().slice(0, 10);
-    }
-
-    function showTab(name, btn) {
-      document.querySelectorAll(".tab").forEach(t => t.classList.add("hidden"));
-      document.getElementById(name).classList.remove("hidden");
-      document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      render();
-    }
-
-    function saveNote() {
-      const text = document.getElementById("noteInput").value.trim();
-      if (!text) return;
-      data.notes.unshift({ id: id(), text, date: todayISO() });
-      document.getElementById("noteInput").value = "";
-      save();
-    }
-
-    function makePrompt() {
-      const note = document.getElementById("noteInput").value.trim();
-      const recentNotes = data.notes.slice(0, 5).map(n => `- ${n.text}`).join("\n");
-
-      const prompt = `
-You are helping me organize my personal command center.
-
-I am a husband, dad of 2, consultant working long hours, and I care about fitness.
-
-Analyze these unstructured notes and return ONLY valid JSON in this exact structure:
-
-{
-  "tasks": [
-    {
-      "title": "string",
-      "area": "Work | Family | Health | Personal",
-      "priority": 1,
-      "dueDate": "YYYY-MM-DD or blank"
-    }
-  ],
-  "waiting": [
-    {
-      "person": "string",
-      "thing": "string",
-      "followUpDate": "YYYY-MM-DD or blank"
-    }
-  ],
-  "goals": [
-    {
-      "title": "string",
-      "area": "Work | Family | Health | Personal",
-      "progress": "string"
-    }
-  ]
+function showTab(name,btn){
+  document.querySelectorAll(".tab").forEach(x=>x.classList.add("hidden"));
+  document.getElementById(name).classList.remove("hidden");
+  document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
+  btn.classList.add("active");
+  render();
 }
 
-Rules:
-- Keep task titles short and action-oriented.
-- Use priority 1 for highest priority, 2 for medium, 3 for low.
-- Only include items clearly implied by the notes.
-- Return JSON only. No markdown.
-
-Current note:
-${note || "(none typed yet)"}
-
-Recent saved notes:
-${recentNotes || "(none)"}
-`;
-
-      document.getElementById("promptOutput").textContent = prompt.trim();
-      document.getElementById("promptCard").classList.remove("hidden");
-    }
-
-    function importChatGPT() {
-  try {
-    let text = document.getElementById("importInput").value.trim();
-
-    // Remove markdown code fences if present
-    text = text.replace(/```json/g, "");
-    text = text.replace(/```/g, "");
-
-    // Find JSON object if extra text exists
-    const start = text.indexOf("{");
-    const end = text.lastIndexOf("}");
-
-    if (start >= 0 && end >= 0) {
-      text = text.substring(start, end + 1);
-    }
-
-    const parsed = JSON.parse(text);
-
-    (parsed.tasks || []).forEach(t => {
-      data.tasks.push({
-        id: id(),
-        title: t.title || "",
-        area: t.area || "Personal",
-        priority: Number(t.priority || 3),
-        dueDate: t.dueDate || "",
-        done: false,
-        created: todayISO()
-      });
-    });
-
-    (parsed.waiting || []).forEach(w => {
-      data.waiting.push({
-        id: id(),
-        person: w.person || "",
-        thing: w.thing || "",
-        followUpDate: w.followUpDate || "",
-        done: false,
-        created: todayISO()
-      });
-    });
-
-    (parsed.goals || []).forEach(g => {
-      data.goals.push({
-        id: id(),
-        title: g.title || "",
-        area: g.area || "Personal",
-        progress: g.progress || "",
-        done: false
-      });
-    });
-
-    document.getElementById("importInput").value = "";
-    save();
-
-    alert("Import successful!");
-
-  } catch (err) {
-    console.error(err);
-    alert("Import failed. Check browser console.");
-  }
+function addTarget(){
+  if(!targetTitle.value.trim())return;
+  data.targets.push({id:id(),title:targetTitle.value.trim(),area:targetArea.value,done:false,created:today()});
+  targetTitle.value="";
+  save();
 }
 
-    function addWaiting() {
-      const person = document.getElementById("waitPerson").value.trim();
-      const thing = document.getElementById("waitThing").value.trim();
-      const followUpDate = document.getElementById("waitDate").value;
-      if (!person || !thing) return;
+function addEvent(){
+  if(!eventTitle.value.trim())return;
+  data.events.push({id:id(),date:eventDate.value,time:eventTime.value,title:eventTitle.value.trim(),area:eventArea.value,done:false});
+  eventTitle.value="";
+  eventTime.value="";
+  save();
+}
 
-      data.waiting.push({
-        id: id(),
-        person,
-        thing,
-        followUpDate,
-        done: false,
-        created: todayISO()
-      });
+function saveCheckin(){
+  const existing=data.checkins.find(x=>x.date===checkDate.value);
+  const entry={
+    id:existing?.id||id(),
+    date:checkDate.value,
+    mood:+mood.value,
+    energy:+energy.value,
+    stress:+stress.value,
+    sleep:+sleep.value||0,
+    workedOut:workedOut.value==="Workout completed",
+    familyTime:familyTime.value,
+    win:win.value.trim(),
+    frustration:frustration.value.trim()
+  };
+  data.checkins=data.checkins.filter(x=>x.date!==entry.date);
+  data.checkins.push(entry);
+  save();
+}
 
-      document.getElementById("waitPerson").value = "";
-      document.getElementById("waitThing").value = "";
-      document.getElementById("waitDate").value = "";
-      save();
-    }
+function saveNote(){
+  if(!note.value.trim())return;
+  data.notes.unshift({id:id(),date:today(),text:note.value.trim()});
+  note.value="";
+  save();
+}
 
-    function addGoal() {
-      const title = document.getElementById("goalTitle").value.trim();
-      const area = document.getElementById("goalArea").value;
-      const progress = document.getElementById("goalProgress").value.trim();
-      if (!title) return;
+function toggleTarget(id){
+  const t=data.targets.find(x=>x.id===id);
+  t.done=!t.done;
+  save();
+}
 
-      data.goals.push({
-        id: id(),
-        title,
-        area,
-        progress,
-        done: false
-      });
+function remove(type,id){
+  data[type]=data[type].filter(x=>x.id!==id);
+  save();
+}
 
-      document.getElementById("goalTitle").value = "";
-      document.getElementById("goalProgress").value = "";
-      save();
-    }
+function pct(done,total){return total?Math.round((done/total)*100):0}
 
-    function complete(type, itemId) {
-      const item = data[type].find(x => x.id === itemId);
-      if (item) item.done = true;
-      save();
-    }
+function areaScore(area){
+  const items=data.targets.filter(x=>x.area===area);
+  return pct(items.filter(x=>x.done).length,items.length);
+}
 
-    function remove(type, itemId) {
-      data[type] = data[type].filter(x => x.id !== itemId);
-      save();
-    }
+function wellbeingScore(){
+  const recent=[...data.checkins].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,7);
+  if(!recent.length)return 0;
+  const avgMood=recent.reduce((s,x)=>s+x.mood,0)/recent.length;
+  const avgEnergy=recent.reduce((s,x)=>s+x.energy,0)/recent.length;
+  const avgStress=recent.reduce((s,x)=>s+x.stress,0)/recent.length;
+  return Math.round(((avgMood+avgEnergy+(6-avgStress))/15)*100);
+}
 
-    function renderItems(el, items, type) {
-      const node = document.getElementById(el);
-      const open = items.filter(x => !x.done);
+function render(){
+  const areas=["Work","Family","Health"];
+  const scores=areas.map(areaScore);
+  const wellbeing=wellbeingScore();
+  const all=[...scores,wellbeing].filter(x=>x>0);
+  const week=all.length?Math.round(all.reduce((a,b)=>a+b,0)/all.length):0;
 
-      if (!open.length) {
-        node.innerHTML = `<div class="empty">Nothing here.</div>`;
-        return;
-      }
+  weekScore.textContent=week+"%";
+  weekFill.style.width=week+"%";
 
-      node.innerHTML = open.map(x => `
-        <div class="item">
-          <div class="item-title">${escapeHTML(x.title || x.thing || "")}</div>
-          <div class="meta">
-            ${x.person ? `Waiting on ${escapeHTML(x.person)} · ` : ""}
-            ${x.area ? `${escapeHTML(x.area)} · ` : ""}
-            ${x.dueDate ? `Due ${x.dueDate} · ` : ""}
-            ${x.followUpDate ? `Follow up ${x.followUpDate} · ` : ""}
-            ${x.progress ? `${escapeHTML(x.progress)} · ` : ""}
-            ${x.priority ? `Priority ${x.priority}` : ""}
-          </div>
-          <div class="row">
-            <button class="secondary" onclick="complete('${type}', '${x.id}')">Done</button>
-            <button class="danger" onclick="remove('${type}', '${x.id}')">Delete</button>
-          </div>
-        </div>
-      `).join("");
-    }
+  areaScores.innerHTML=[
+    ...areas.map((a,i)=>metric(a,scores[i])),
+    metric("Wellbeing",wellbeing)
+  ].join("");
 
-    function render() {
-      const tasks = data.tasks.filter(t => !t.done);
-      const sortedTasks = [...tasks].sort((a,b) => (a.priority || 3) - (b.priority || 3));
+  const open=data.targets.filter(x=>!x.done);
+  todayFocus.innerHTML=open.slice(0,3).map(x=>card(x.title,x.area,`<button class="secondary" onclick="toggleTarget('${x.id}')">Mark Done</button>`)).join("")||`<div class="empty">Add weekly targets to create focus.</div>`;
 
-      renderItems("bigThree", sortedTasks.slice(0, 3), "tasks");
+  const radarItems=[];
+  const oldOpen=open.slice(0,4).map(x=>"Open target: "+x.title);
+  radarItems.push(...oldOpen);
+  const lastCheck=[...data.checkins].sort((a,b)=>b.date.localeCompare(a.date))[0];
+  if(!lastCheck)radarItems.push("No EOD check-in yet");
+  if(lastCheck&&lastCheck.energy<=2)radarItems.push("Energy has been low");
+  if(lastCheck&&lastCheck.stress>=4)radarItems.push("Stress is elevated");
+  if(lastCheck&&!lastCheck.workedOut)radarItems.push("No workout logged last check-in");
 
-      const dueSoon = tasks
-        .filter(t => t.dueDate)
-        .sort((a,b) => a.dueDate.localeCompare(b.dueDate))
-        .slice(0, 5);
+  radar.innerHTML=radarItems.length?radarItems.map(x=>`<div class="item"><div class="title">⚠ ${esc(x)}</div></div>`).join(""):`<div class="empty">Nothing needs attention.</div>`;
 
-      renderItems("dueSoon", dueSoon, "tasks");
-      renderItems("todayWaiting", data.waiting.slice(0, 5), "waiting");
-      renderItems("waitingList", data.waiting, "waiting");
-      renderItems("goalsList", data.goals, "goals");
+  targetsList.innerHTML=data.targets.map(x=>`
+    <div class="item">
+      <div class="title">${x.done?"✅":"⬜"} ${esc(x.title)}</div>
+      <div class="meta">${esc(x.area)}</div>
+      <div class="row">
+        <button class="secondary" onclick="toggleTarget('${x.id}')">${x.done?"Undo":"Done"}</button>
+        <button class="danger" onclick="remove('targets','${x.id}')">Delete</button>
+      </div>
+    </div>`).join("")||`<div class="empty">No weekly targets yet.</div>`;
 
-      const notes = data.notes.slice(0, 10);
-      document.getElementById("notesList").innerHTML = notes.length
-        ? notes.map(n => `
-          <div class="item">
-            <div class="meta">${n.date}</div>
-            <div>${escapeHTML(n.text)}</div>
-            <button class="danger" onclick="remove('notes', '${n.id}')">Delete</button>
-          </div>
-        `).join("")
-        : `<div class="empty">No notes yet.</div>`;
-    }
+  const selectedDate=eventDate.value||today();
+  const events=data.events.filter(x=>x.date===selectedDate).sort((a,b)=>(a.time||"99").localeCompare(b.time||"99"));
+  dayList.innerHTML=events.map(x=>`
+    <div class="dayrow">
+      <div class="hour">${x.time||"Anytime"}</div>
+      <div class="item">
+        <div class="title">${esc(x.title)}</div>
+        <div class="meta">${esc(x.area)}</div>
+        <button class="danger" onclick="remove('events','${x.id}')">Delete</button>
+      </div>
+    </div>`).join("")||`<div class="empty">No events for this day.</div>`;
 
-    function generateReview() {
-      const openTasks = data.tasks.filter(t => !t.done);
-      const waiting = data.waiting.filter(w => !w.done);
-      const goals = data.goals.filter(g => !g.done);
+  const checks=[...data.checkins].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10);
+  checkinList.innerHTML=checks.map(x=>`
+    <div class="item">
+      <div class="title">${x.date}</div>
+      <div class="meta">Mood ${x.mood}/5 · Energy ${x.energy}/5 · Stress ${x.stress}/5 · Sleep ${x.sleep || "?"}h · ${x.workedOut?"Workout":"No workout"}</div>
+      ${x.win?`<div class="small">Win: ${esc(x.win)}</div>`:""}
+    </div>`).join("")||`<div class="empty">No check-ins yet.</div>`;
+}
 
-      const review = `
-WEEKLY REVIEW
+function metric(label,value){
+  return `<div class="metric"><strong>${label}</strong><span>${value}%</span></div><div class="bar"><div class="fill" style="width:${value}%"></div></div>`;
+}
 
-Big Three Candidates:
-${openTasks.slice(0, 3).map(t => `- ${t.title} (${t.area || "Personal"})`).join("\n") || "- None"}
+function card(title,meta,actions=""){
+  return `<div class="item"><div class="title">${esc(title)}</div><div class="meta">${esc(meta||"")}</div>${actions}</div>`;
+}
 
-Waiting On:
-${waiting.map(w => `- ${w.person}: ${w.thing}${w.followUpDate ? " — follow up " + w.followUpDate : ""}`).join("\n") || "- None"}
+function exportData(){backup.value=JSON.stringify(data,null,2)}
+function importData(){try{data=JSON.parse(backup.value);;save()}catch(e){alert("Invalid JSON")}}
+function clearAll(){if(confirm("Clear all data?")){data={targets:[],events:[],checkins:[],notes:[]};save()}}
+function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 
-Goals:
-${goals.map(g => `- ${g.area}: ${g.title}${g.progress ? " — " + g.progress : ""}`).join("\n") || "- None"}
-
-Neglected Areas To Consider:
-- Family logistics
-- Health/workouts
-- Client follow-ups
-- Personal admin
-`.trim();
-
-      document.getElementById("reviewOutput").textContent = review;
-    }
-
-    function exportData() {
-      document.getElementById("backupBox").value = JSON.stringify(data, null, 2);
-    }
-
-    function importBackup() {
-      try {
-        data = JSON.parse(document.getElementById("backupBox").value);
-        save();
-        alert("Backup imported.");
-      } catch(e) {
-        alert("Invalid JSON.");
-      }
-    }
-
-    function clearAll() {
-      if (!confirm("Clear all local data?")) return;
-      data = { notes: [], tasks: [], waiting: [], goals: [] };
-      save();
-    }
-
-    function copyText(id) {
-      const text = document.getElementById(id).textContent || document.getElementById(id).value;
-      navigator.clipboard.writeText(text);
-      alert("Copied.");
-    }
-
-    function escapeHTML(str) {
-      return String(str).replace(/[&<>"']/g, m => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      }[m]));
-    }
-
-    render();
-  </script>
+eventDate.addEventListener("change",render);
+render();
+</script>
 </body>
 </html>
