@@ -2,134 +2,177 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0" />
-<title>Life Scorecard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Life Dashboard</title>
 <style>
-:root{--bg:#f6f5f1;--card:#fff;--text:#18212f;--muted:#6b7280;--border:#e5e7eb;--dark:#111827;--soft:#eef2f7;--good:#16a34a;--warn:#ca8a04;--bad:#dc2626}
+:root{
+  --bg:#09090b; --card:#141418; --card2:#1c1c22; --text:#f5f5f7;
+  --muted:#a1a1aa; --line:#2a2a32; --accent:#8b5cf6; --green:#22c55e;
+  --yellow:#f59e0b; --red:#ef4444; --blue:#38bdf8; --radius:24px;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);padding-bottom:88px}
-header{padding:22px 18px 8px;max-width:800px;margin:auto}
-h1{margin:0;font-size:30px;letter-spacing:-.05em}
+body{margin:0;background:linear-gradient(180deg,#09090b,#111116);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:86px}
+header{padding:26px 18px 10px;max-width:820px;margin:auto}
+h1{font-size:32px;margin:0;letter-spacing:-.06em}
 .sub{color:var(--muted);font-size:14px;margin-top:4px}
-main{max-width:800px;margin:auto;padding:10px 14px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:16px;margin-bottom:14px;box-shadow:0 2px 10px rgba(0,0,0,.03)}
-h2{font-size:20px;margin:0 0 12px;letter-spacing:-.03em}
-h3{font-size:13px;margin:16px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-input,textarea,select{width:100%;border:1px solid var(--border);border-radius:14px;padding:13px;font-size:16px;margin-bottom:10px;background:white}
-textarea{min-height:110px}
-button{width:100%;border:0;border-radius:14px;padding:12px 14px;font-size:15px;font-weight:700;background:var(--dark);color:white;margin:4px 0}
-button.secondary{background:var(--soft);color:var(--text)}
-button.danger{background:#fee2e2;color:var(--bad)}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.score{font-size:46px;font-weight:800;letter-spacing:-.06em}
-.bar{height:12px;background:var(--soft);border-radius:999px;overflow:hidden;margin:8px 0 12px}
-.fill{height:100%;background:var(--dark);border-radius:999px}
-.metric{display:flex;justify-content:space-between;align-items:center;margin:10px 0}
-.item{border:1px solid var(--border);border-radius:16px;padding:12px;margin-bottom:9px;background:white}
-.title{font-weight:750}
-.meta{font-size:13px;color:var(--muted);margin-top:3px}
-.dayrow{display:grid;grid-template-columns:56px 1fr;gap:10px;align-items:start;border-bottom:1px solid var(--border);padding:8px 0}
-.hour{font-size:13px;color:var(--muted)}
-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(5,1fr);padding:8px 6px 18px}
-nav button{background:transparent;color:var(--muted);font-size:12px;padding:8px 2px;margin:0;border-radius:12px}
-nav button.active{background:var(--dark);color:white}
+main{max-width:820px;margin:auto;padding:10px 14px}
+.card{background:rgba(20,20,24,.92);border:1px solid var(--line);border-radius:var(--radius);padding:18px;margin-bottom:14px;box-shadow:0 12px 30px rgba(0,0,0,.25)}
+h2{font-size:20px;margin:0 0 14px;letter-spacing:-.04em}
+label{display:block;color:var(--muted);font-size:13px;margin:14px 0 6px}
+input,textarea,select{width:100%;border:1px solid var(--line);background:#0f0f13;color:var(--text);border-radius:16px;padding:14px;font-size:16px}
+textarea{min-height:90px}
+button{width:100%;border:0;border-radius:16px;background:var(--accent);color:white;padding:14px;font-size:16px;font-weight:800;margin-top:12px}
+button.secondary{background:var(--card2);color:var(--text)}
+button.danger{background:#3b1111;color:#fecaca}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.metric{background:var(--card2);border:1px solid var(--line);border-radius:20px;padding:14px}
+.big{font-size:30px;font-weight:900;letter-spacing:-.06em}
+.muted{color:var(--muted);font-size:13px}
+.bar{height:10px;background:#27272f;border-radius:99px;overflow:hidden;margin-top:8px}
+.fill{height:100%;background:var(--accent);border-radius:99px}
+.item{background:#101014;border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:10px}
+.item strong{display:block;margin-bottom:4px}
+nav{position:fixed;bottom:0;left:0;right:0;background:#0d0d11;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(3,1fr);padding:8px 8px 18px}
+nav button{background:transparent;color:var(--muted);font-size:13px;padding:10px 4px;margin:0;border-radius:14px}
+nav button.active{background:var(--accent);color:white}
 .hidden{display:none}
-.empty{color:var(--muted);font-size:14px}
-.small{font-size:12px;color:var(--muted)}
+.rangeRow{display:flex;align-items:center;gap:12px}
+.rangeRow input{padding:0}
+.rangeVal{width:40px;text-align:center;font-size:24px;font-weight:900}
+.pill{display:inline-block;background:#27272f;color:var(--muted);padding:5px 9px;border-radius:999px;font-size:12px;margin:4px 4px 0 0}
+canvas{width:100%;height:180px;background:#0f0f13;border:1px solid var(--line);border-radius:18px}
 </style>
 </head>
 <body>
 <header>
-  <h1>Life Scorecard</h1>
-  <div class="sub">Focus. Progress. Energy. Wellbeing.</div>
+  <h1>Life Dashboard</h1>
+  <div class="sub">Mood · Energy · Stress · Fitness · Habits</div>
 </header>
 
 <main>
 <section id="dashboard" class="tab">
   <div class="card">
-    <h2>This Week</h2>
-    <div class="score" id="weekScore">0%</div>
-    <div class="bar"><div class="fill" id="weekFill"></div></div>
-    <div id="areaScores"></div>
+    <h2>Last 7 Days</h2>
+    <div class="grid">
+      <div class="metric"><div class="muted">Mood</div><div class="big" id="avgMood">—</div></div>
+      <div class="metric"><div class="muted">Energy</div><div class="big" id="avgEnergy">—</div></div>
+      <div class="metric"><div class="muted">Stress</div><div class="big" id="avgStress">—</div></div>
+      <div class="metric"><div class="muted">Workouts</div><div class="big" id="workoutRate">—</div></div>
+    </div>
   </div>
 
   <div class="card">
-    <h2>Today’s Focus</h2>
-    <div id="todayFocus"></div>
+    <h2>Wellbeing Score</h2>
+    <div class="big" id="wellbeing">—</div>
+    <div class="bar"><div class="fill" id="wellbeingFill"></div></div>
   </div>
 
   <div class="card">
-    <h2>Life Radar</h2>
-    <div id="radar"></div>
+    <h2>Trend</h2>
+    <canvas id="chart" width="700" height="260"></canvas>
   </div>
-</section>
 
-<section id="week" class="tab hidden">
   <div class="card">
-    <h2>Weekly Targets</h2>
-    <input id="targetTitle" placeholder="Target, e.g. Workout 4x" />
-    <select id="targetArea">
-      <option>Work</option><option>Family</option><option>Health</option><option>Wellbeing</option><option>Personal</option>
-    </select>
-    <button onclick="addTarget()">Add Target</button>
-  </div>
-  <div class="card">
-    <h2>Progress</h2>
-    <div id="targetsList"></div>
-  </div>
-</section>
-
-<section id="day" class="tab hidden">
-  <div class="card">
-    <h2>Day View</h2>
-    <input id="eventDate" type="date" />
-    <input id="eventTime" type="time" />
-    <input id="eventTitle" placeholder="Event or time block" />
-    <select id="eventArea">
-      <option>Work</option><option>Family</option><option>Health</option><option>Personal</option>
-    </select>
-    <button onclick="addEvent()">Add To Day</button>
-  </div>
-  <div class="card">
-    <h2>Hour by Hour</h2>
-    <div id="dayList"></div>
+    <h2>Insights</h2>
+    <div id="insights"></div>
   </div>
 </section>
 
 <section id="checkin" class="tab hidden">
   <div class="card">
     <h2>End of Day Check-In</h2>
-    <input id="checkDate" type="date" />
-    <label>Mood: <span id="moodVal">3</span></label>
-    <input id="mood" type="range" min="1" max="5" value="3" oninput="moodVal.textContent=this.value" />
-    <label>Energy: <span id="energyVal">3</span></label>
-    <input id="energy" type="range" min="1" max="5" value="3" oninput="energyVal.textContent=this.value" />
-    <label>Stress: <span id="stressVal">3</span></label>
-    <input id="stress" type="range" min="1" max="5" value="3" oninput="stressVal.textContent=this.value" />
-    <input id="sleep" type="number" step=".5" placeholder="Sleep hours" />
-    <select id="workedOut"><option>No workout</option><option>Workout completed</option></select>
-    <select id="familyTime"><option>Low family time</option><option>Good family time</option><option>Great family time</option></select>
-    <textarea id="win" placeholder="Biggest win today"></textarea>
-    <textarea id="frustration" placeholder="Biggest frustration"></textarea>
+
+    <label>Date</label>
+    <input id="date" type="date" />
+
+    <label>Mood</label>
+    <div class="rangeRow"><input id="mood" type="range" min="1" max="5" value="3" oninput="moodVal.textContent=this.value"><div class="rangeVal" id="moodVal">3</div></div>
+
+    <label>Energy</label>
+    <div class="rangeRow"><input id="energy" type="range" min="1" max="5" value="3" oninput="energyVal.textContent=this.value"><div class="rangeVal" id="energyVal">3</div></div>
+
+    <label>Stress</label>
+    <div class="rangeRow"><input id="stress" type="range" min="1" max="5" value="3" oninput="stressVal.textContent=this.value"><div class="rangeVal" id="stressVal">3</div></div>
+
+    <div class="row">
+      <div>
+        <label>Sleep Hours</label>
+        <input id="sleep" type="number" step=".25" placeholder="7.5" />
+      </div>
+      <div>
+        <label>Alcohol Drinks</label>
+        <input id="alcohol" type="number" min="0" step="1" placeholder="0" />
+      </div>
+    </div>
+
+    <label>Worked Out?</label>
+    <select id="workedOut" onchange="toggleWorkout()">
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
+
+    <div id="workoutFields" class="hidden">
+      <label>Workout Type</label>
+      <select id="workoutType">
+        <option>Strength</option>
+        <option>Cardio</option>
+        <option>HIIT</option>
+        <option>Mobility</option>
+        <option>Walk</option>
+        <option>Sport</option>
+        <option>Other</option>
+      </select>
+
+      <div class="row">
+        <div>
+          <label>Workout Time</label>
+          <input id="workoutTime" type="time" />
+        </div>
+        <div>
+          <label>Length Minutes</label>
+          <input id="workoutMinutes" type="number" min="0" placeholder="45" />
+        </div>
+      </div>
+    </div>
+
+    <label>Nutrition Quality</label>
+    <select id="nutrition">
+      <option value="3">Average</option>
+      <option value="5">Great</option>
+      <option value="4">Good</option>
+      <option value="2">Poor</option>
+      <option value="1">Bad</option>
+    </select>
+
+    <label>Family Connection</label>
+    <select id="family">
+      <option value="3">Average</option>
+      <option value="5">Great</option>
+      <option value="4">Good</option>
+      <option value="2">Low</option>
+      <option value="1">Very low</option>
+    </select>
+
+    <label>Biggest Win</label>
+    <textarea id="win"></textarea>
+
+    <label>Biggest Stressor</label>
+    <textarea id="stressor"></textarea>
+
     <button onclick="saveCheckin()">Save Check-In</button>
-  </div>
-  <div class="card">
-    <h2>Wellbeing Trend</h2>
-    <div id="checkinList"></div>
   </div>
 </section>
 
-<section id="capture" class="tab hidden">
+<section id="history" class="tab hidden">
   <div class="card">
-    <h2>Capture</h2>
-    <textarea id="note" placeholder="Brain dump anything here..."></textarea>
-    <button onclick="saveNote()">Save Note</button>
+    <h2>History</h2>
+    <div id="historyList"></div>
   </div>
 
   <div class="card">
     <h2>Backup</h2>
-    <button onclick="exportData()">Export JSON</button>
+    <button class="secondary" onclick="exportData()">Export JSON</button>
     <textarea id="backup" placeholder="Export/import data here"></textarea>
     <button class="secondary" onclick="importData()">Import JSON</button>
     <button class="danger" onclick="clearAll()">Clear All</button>
@@ -138,176 +181,155 @@ nav button.active{background:var(--dark);color:white}
 </main>
 
 <nav>
-  <button class="active" onclick="showTab('dashboard',this)">Home</button>
-  <button onclick="showTab('week',this)">Week</button>
-  <button onclick="showTab('day',this)">Day</button>
-  <button onclick="showTab('checkin',this)">EOD</button>
-  <button onclick="showTab('capture',this)">Capture</button>
+  <button class="active" onclick="showTab('dashboard',this)">Dashboard</button>
+  <button onclick="showTab('checkin',this)">Check-In</button>
+  <button onclick="showTab('history',this)">History</button>
 </nav>
 
 <script>
-const KEY="lifeScorecardV1";
-let data=JSON.parse(localStorage.getItem(KEY))||{
-  targets:[],events:[],checkins:[],notes:[]
-};
+const KEY="lifeDashboardV2";
+let data=JSON.parse(localStorage.getItem(KEY))||{checkins:[]};
+
+function today(){return new Date().toISOString().slice(0,10)}
+date.value=today();
 
 function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
-function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2)}
-function today(){return new Date().toISOString().slice(0,10)}
-
-eventDate.value=today();
-checkDate.value=today();
-
-function showTab(name,btn){
-  document.querySelectorAll(".tab").forEach(x=>x.classList.add("hidden"));
-  document.getElementById(name).classList.remove("hidden");
-  document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));
+function showTab(id,btn){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
   render();
 }
-
-function addTarget(){
-  if(!targetTitle.value.trim())return;
-  data.targets.push({id:id(),title:targetTitle.value.trim(),area:targetArea.value,done:false,created:today()});
-  targetTitle.value="";
-  save();
-}
-
-function addEvent(){
-  if(!eventTitle.value.trim())return;
-  data.events.push({id:id(),date:eventDate.value,time:eventTime.value,title:eventTitle.value.trim(),area:eventArea.value,done:false});
-  eventTitle.value="";
-  eventTime.value="";
-  save();
-}
+function toggleWorkout(){workoutFields.classList.toggle("hidden",workedOut.value!=="yes")}
 
 function saveCheckin(){
-  const existing=data.checkins.find(x=>x.date===checkDate.value);
   const entry={
-    id:existing?.id||id(),
-    date:checkDate.value,
+    date:date.value,
     mood:+mood.value,
     energy:+energy.value,
     stress:+stress.value,
     sleep:+sleep.value||0,
-    workedOut:workedOut.value==="Workout completed",
-    familyTime:familyTime.value,
+    alcohol:+alcohol.value||0,
+    workedOut:workedOut.value==="yes",
+    workoutType:workedOut.value==="yes"?workoutType.value:"",
+    workoutTime:workedOut.value==="yes"?workoutTime.value:"",
+    workoutMinutes:workedOut.value==="yes"?(+workoutMinutes.value||0):0,
+    nutrition:+nutrition.value,
+    family:+family.value,
     win:win.value.trim(),
-    frustration:frustration.value.trim()
+    stressor:stressor.value.trim()
   };
   data.checkins=data.checkins.filter(x=>x.date!==entry.date);
   data.checkins.push(entry);
   save();
+  alert("Saved.");
 }
 
-function saveNote(){
-  if(!note.value.trim())return;
-  data.notes.unshift({id:id(),date:today(),text:note.value.trim()});
-  note.value="";
-  save();
-}
-
-function toggleTarget(id){
-  const t=data.targets.find(x=>x.id===id);
-  t.done=!t.done;
-  save();
-}
-
-function remove(type,id){
-  data[type]=data[type].filter(x=>x.id!==id);
-  save();
-}
-
-function pct(done,total){return total?Math.round((done/total)*100):0}
-
-function areaScore(area){
-  const items=data.targets.filter(x=>x.area===area);
-  return pct(items.filter(x=>x.done).length,items.length);
-}
-
-function wellbeingScore(){
-  const recent=[...data.checkins].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,7);
-  if(!recent.length)return 0;
-  const avgMood=recent.reduce((s,x)=>s+x.mood,0)/recent.length;
-  const avgEnergy=recent.reduce((s,x)=>s+x.energy,0)/recent.length;
-  const avgStress=recent.reduce((s,x)=>s+x.stress,0)/recent.length;
-  return Math.round(((avgMood+avgEnergy+(6-avgStress))/15)*100);
+function avg(arr,key){
+  const vals=arr.map(x=>+x[key]).filter(x=>!isNaN(x)&&x>0);
+  return vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length):0;
 }
 
 function render(){
-  const areas=["Work","Family","Health"];
-  const scores=areas.map(areaScore);
-  const wellbeing=wellbeingScore();
-  const all=[...scores,wellbeing].filter(x=>x>0);
-  const week=all.length?Math.round(all.reduce((a,b)=>a+b,0)/all.length):0;
+  const recent=[...data.checkins].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,7);
+  const moodAvg=avg(recent,"mood");
+  const energyAvg=avg(recent,"energy");
+  const stressAvg=avg(recent,"stress");
+  const workoutPct=recent.length?Math.round(recent.filter(x=>x.workedOut).length/recent.length*100):0;
+  const wellbeingScore=recent.length?Math.round(((moodAvg+energyAvg+(6-stressAvg)+avg(recent,"nutrition")+avg(recent,"family"))/25)*100):0;
 
-  weekScore.textContent=week+"%";
-  weekFill.style.width=week+"%";
+  avgMood.textContent=moodAvg?moodAvg.toFixed(1):"—";
+  avgEnergy.textContent=energyAvg?energyAvg.toFixed(1):"—";
+  avgStress.textContent=stressAvg?stressAvg.toFixed(1):"—";
+  workoutRate.textContent=recent.length?workoutPct+"%":"—";
+  wellbeing.textContent=recent.length?wellbeingScore+"%":"—";
+  wellbeingFill.style.width=wellbeingScore+"%";
 
-  areaScores.innerHTML=[
-    ...areas.map((a,i)=>metric(a,scores[i])),
-    metric("Wellbeing",wellbeing)
-  ].join("");
-
-  const open=data.targets.filter(x=>!x.done);
-  todayFocus.innerHTML=open.slice(0,3).map(x=>card(x.title,x.area,`<button class="secondary" onclick="toggleTarget('${x.id}')">Mark Done</button>`)).join("")||`<div class="empty">Add weekly targets to create focus.</div>`;
-
-  const radarItems=[];
-  const oldOpen=open.slice(0,4).map(x=>"Open target: "+x.title);
-  radarItems.push(...oldOpen);
-  const lastCheck=[...data.checkins].sort((a,b)=>b.date.localeCompare(a.date))[0];
-  if(!lastCheck)radarItems.push("No EOD check-in yet");
-  if(lastCheck&&lastCheck.energy<=2)radarItems.push("Energy has been low");
-  if(lastCheck&&lastCheck.stress>=4)radarItems.push("Stress is elevated");
-  if(lastCheck&&!lastCheck.workedOut)radarItems.push("No workout logged last check-in");
-
-  radar.innerHTML=radarItems.length?radarItems.map(x=>`<div class="item"><div class="title">⚠ ${esc(x)}</div></div>`).join(""):`<div class="empty">Nothing needs attention.</div>`;
-
-  targetsList.innerHTML=data.targets.map(x=>`
-    <div class="item">
-      <div class="title">${x.done?"✅":"⬜"} ${esc(x.title)}</div>
-      <div class="meta">${esc(x.area)}</div>
-      <div class="row">
-        <button class="secondary" onclick="toggleTarget('${x.id}')">${x.done?"Undo":"Done"}</button>
-        <button class="danger" onclick="remove('targets','${x.id}')">Delete</button>
-      </div>
-    </div>`).join("")||`<div class="empty">No weekly targets yet.</div>`;
-
-  const selectedDate=eventDate.value||today();
-  const events=data.events.filter(x=>x.date===selectedDate).sort((a,b)=>(a.time||"99").localeCompare(b.time||"99"));
-  dayList.innerHTML=events.map(x=>`
-    <div class="dayrow">
-      <div class="hour">${x.time||"Anytime"}</div>
-      <div class="item">
-        <div class="title">${esc(x.title)}</div>
-        <div class="meta">${esc(x.area)}</div>
-        <button class="danger" onclick="remove('events','${x.id}')">Delete</button>
-      </div>
-    </div>`).join("")||`<div class="empty">No events for this day.</div>`;
-
-  const checks=[...data.checkins].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10);
-  checkinList.innerHTML=checks.map(x=>`
-    <div class="item">
-      <div class="title">${x.date}</div>
-      <div class="meta">Mood ${x.mood}/5 · Energy ${x.energy}/5 · Stress ${x.stress}/5 · Sleep ${x.sleep || "?"}h · ${x.workedOut?"Workout":"No workout"}</div>
-      ${x.win?`<div class="small">Win: ${esc(x.win)}</div>`:""}
-    </div>`).join("")||`<div class="empty">No check-ins yet.</div>`;
+  renderChart(recent.reverse());
+  renderInsights();
+  renderHistory();
 }
 
-function metric(label,value){
-  return `<div class="metric"><strong>${label}</strong><span>${value}%</span></div><div class="bar"><div class="fill" style="width:${value}%"></div></div>`;
+function renderInsights(){
+  const c=data.checkins;
+  const workoutDays=c.filter(x=>x.workedOut);
+  const nonWorkoutDays=c.filter(x=>!x.workedOut);
+  const alcoholDays=c.filter(x=>x.alcohol>0);
+  const noAlcoholDays=c.filter(x=>x.alcohol===0);
+  const insights=[];
+
+  if(workoutDays.length&&nonWorkoutDays.length){
+    insights.push(`Workout days mood avg: ${avg(workoutDays,"mood").toFixed(1)} vs non-workout: ${avg(nonWorkoutDays,"mood").toFixed(1)}`);
+    insights.push(`Workout days energy avg: ${avg(workoutDays,"energy").toFixed(1)} vs non-workout: ${avg(nonWorkoutDays,"energy").toFixed(1)}`);
+  }
+  if(alcoholDays.length&&noAlcoholDays.length){
+    insights.push(`Alcohol days energy avg: ${avg(alcoholDays,"energy").toFixed(1)} vs no-alcohol: ${avg(noAlcoholDays,"energy").toFixed(1)}`);
+    insights.push(`Alcohol days stress avg: ${avg(alcoholDays,"stress").toFixed(1)} vs no-alcohol: ${avg(noAlcoholDays,"stress").toFixed(1)}`);
+  }
+  if(c.length>=3){
+    insights.push(`Best mood day: ${[...c].sort((a,b)=>b.mood-a.mood)[0].date}`);
+    insights.push(`Average sleep: ${avg(c,"sleep").toFixed(1)} hrs`);
+  }
+
+  insightsEl=insights.length?insights.map(x=>`<div class="item"><strong>${esc(x)}</strong></div>`).join(""):`<div class="muted">Add a few check-ins to unlock insights.</div>`;
+  document.getElementById("insights").innerHTML=insightsEl;
 }
 
-function card(title,meta,actions=""){
-  return `<div class="item"><div class="title">${esc(title)}</div><div class="meta">${esc(meta||"")}</div>${actions}</div>`;
+function renderHistory(){
+  const list=[...data.checkins].sort((a,b)=>b.date.localeCompare(a.date));
+  historyList.innerHTML=list.length?list.map(x=>`
+    <div class="item">
+      <strong>${x.date}</strong>
+      <span class="pill">Mood ${x.mood}</span>
+      <span class="pill">Energy ${x.energy}</span>
+      <span class="pill">Stress ${x.stress}</span>
+      <span class="pill">Sleep ${x.sleep || "?"}h</span>
+      <span class="pill">Alcohol ${x.alcohol}</span>
+      <span class="pill">${x.workedOut ? `${x.workoutType} ${x.workoutMinutes}m` : "No workout"}</span>
+      ${x.win?`<div class="muted" style="margin-top:8px">Win: ${esc(x.win)}</div>`:""}
+      ${x.stressor?`<div class="muted">Stressor: ${esc(x.stressor)}</div>`:""}
+    </div>
+  `).join(""):`<div class="muted">No check-ins yet.</div>`;
+}
+
+function renderChart(rows){
+  const c=document.getElementById("chart");
+  const ctx=c.getContext("2d");
+  ctx.clearRect(0,0,c.width,c.height);
+  ctx.strokeStyle="#2a2a32";
+  ctx.lineWidth=1;
+  for(let i=1;i<5;i++){let y=i*45;ctx.beginPath();ctx.moveTo(30,y);ctx.lineTo(680,y);ctx.stroke();}
+  drawLine(rows,"mood","#8b5cf6");
+  drawLine(rows,"energy","#22c55e");
+  drawLine(rows,"stress","#ef4444");
+  ctx.fillStyle="#a1a1aa";ctx.font="22px -apple-system";
+  ctx.fillText("Mood",40,245);ctx.fillText("Energy",140,245);ctx.fillText("Stress",265,245);
+}
+
+function drawLine(rows,key,color){
+  if(!rows.length)return;
+  const ctx=chart.getContext("2d");
+  ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=4;
+  ctx.beginPath();
+  rows.forEach((r,i)=>{
+    const x=45+(i*(600/Math.max(rows.length-1,1)));
+    const y=220-(r[key]/5*180);
+    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+  rows.forEach((r,i)=>{
+    const x=45+(i*(600/Math.max(rows.length-1,1)));
+    const y=220-(r[key]/5*180);
+    ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fill();
+  });
 }
 
 function exportData(){backup.value=JSON.stringify(data,null,2)}
-function importData(){try{data=JSON.parse(backup.value);;save()}catch(e){alert("Invalid JSON")}}
-function clearAll(){if(confirm("Clear all data?")){data={targets:[],events:[],checkins:[],notes:[]};save()}}
+function importData(){try{data=JSON.parse(backup.value);save()}catch(e){alert("Invalid JSON")}}
+function clearAll(){if(confirm("Clear all data?")){data={checkins:[]};save()}}
 function esc(s){return String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 
-eventDate.addEventListener("change",render);
 render();
 </script>
 </body>
