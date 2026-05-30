@@ -393,49 +393,66 @@ ${recentNotes || "(none)"}
     }
 
     function importChatGPT() {
-      try {
-        const parsed = JSON.parse(document.getElementById("importInput").value);
+  try {
+    let text = document.getElementById("importInput").value.trim();
 
-        (parsed.tasks || []).forEach(t => {
-          data.tasks.push({
-            id: id(),
-            title: t.title || "",
-            area: t.area || "Personal",
-            priority: Number(t.priority || 3),
-            dueDate: t.dueDate || "",
-            done: false,
-            created: todayISO()
-          });
-        });
+    // Remove markdown code fences if present
+    text = text.replace(/```json/g, "");
+    text = text.replace(/```/g, "");
 
-        (parsed.waiting || []).forEach(w => {
-          data.waiting.push({
-            id: id(),
-            person: w.person || "",
-            thing: w.thing || "",
-            followUpDate: w.followUpDate || "",
-            done: false,
-            created: todayISO()
-          });
-        });
+    // Find JSON object if extra text exists
+    const start = text.indexOf("{");
+    const end = text.lastIndexOf("}");
 
-        (parsed.goals || []).forEach(g => {
-          data.goals.push({
-            id: id(),
-            title: g.title || "",
-            area: g.area || "Personal",
-            progress: g.progress || "",
-            done: false
-          });
-        });
-
-        document.getElementById("importInput").value = "";
-        alert("Imported successfully.");
-        save();
-      } catch (e) {
-        alert("Could not import. Make sure ChatGPT returned valid JSON only.");
-      }
+    if (start >= 0 && end >= 0) {
+      text = text.substring(start, end + 1);
     }
+
+    const parsed = JSON.parse(text);
+
+    (parsed.tasks || []).forEach(t => {
+      data.tasks.push({
+        id: id(),
+        title: t.title || "",
+        area: t.area || "Personal",
+        priority: Number(t.priority || 3),
+        dueDate: t.dueDate || "",
+        done: false,
+        created: todayISO()
+      });
+    });
+
+    (parsed.waiting || []).forEach(w => {
+      data.waiting.push({
+        id: id(),
+        person: w.person || "",
+        thing: w.thing || "",
+        followUpDate: w.followUpDate || "",
+        done: false,
+        created: todayISO()
+      });
+    });
+
+    (parsed.goals || []).forEach(g => {
+      data.goals.push({
+        id: id(),
+        title: g.title || "",
+        area: g.area || "Personal",
+        progress: g.progress || "",
+        done: false
+      });
+    });
+
+    document.getElementById("importInput").value = "";
+    save();
+
+    alert("Import successful!");
+
+  } catch (err) {
+    console.error(err);
+    alert("Import failed. Check browser console.");
+  }
+}
 
     function addWaiting() {
       const person = document.getElementById("waitPerson").value.trim();
